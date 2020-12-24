@@ -1,0 +1,10 @@
+all: build
+
+build:
+	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -o tcp-proxy cmd/tcp-proxy/main.go;\
+	docker buildx build --platform linux/arm64 --pull -t registry.bizsaas.net/arm64v8/tcp-proxy:1.0 -f Dockerfile.arm64v8 .
+
+push:
+	docker push registry.bizsaas.net/arm64v8/tcp-proxy:1.0
+
+.PHONY: all build push
